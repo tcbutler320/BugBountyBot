@@ -15,10 +15,10 @@ def botserver(API_KEY):
         bot = telebot.TeleBot(API_KEY)
         logging.info('{!} 🤖 Starting Bot Server')
 
-        @bot.message_handler(commands=['Greet','greet'])
+        @bot.message_handler(commands=['start','Start','help','Help'])
         def greet(message):
             # telebot.logger.info("MESSAGE RECIEVED:",message)
-            bot.reply_to(message,"Message Received, Thanks!")
+            bot.reply_to(message,"Welcome to Bug Bounty Bot! An open-source telegram bot with tools to simplify your bug bounty workflow\n Commands:\n dnsenum [domain]")
 
         def dns_enum_check(message):
             request = message.text.split()
@@ -34,9 +34,8 @@ def botserver(API_KEY):
         def send_summary(message):
             request = message.text.split()
             domain_requested = str(request[1])
-            output = 'Results: '
-            output += dnsenum(domain_requested)
-
+            output = dnsenum(domain_requested)
+            bot.reply_to(message,"\n🛀 Here's Your Result\n")
             bot.reply_to(message,output)
             return
 

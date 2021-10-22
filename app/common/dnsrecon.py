@@ -2,6 +2,8 @@
 import requests
 import logging
 import telebot
+import sys
+import os
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.DEBUG) # Outputs debug messages to console.
@@ -17,7 +19,10 @@ def dnsenum(domain_requested):
 def dns_scanner(domain_requested):
 
     try:
-        file = open("/Users/tylerbutler/Documents/projects/programming/Github/bugbountybot/app/resources/subdomains.txt")
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, '../resources/subdomains-100.txt')
+
+        file = open(filename)
         content = file.read()
         subdomains = content.splitlines()
 
@@ -25,6 +30,8 @@ def dns_scanner(domain_requested):
         for subdomain in subdomains:
 
             url = f"http://{subdomain}.{domain_requested}"
+            item_builder = f"✅ {subdomain}.{domain_requested}"
+            item_builder += f"\n"
             try:
                 # if this raises an ERROR, that means the subdomain does not exist
                 requests.get(url)
@@ -32,9 +39,9 @@ def dns_scanner(domain_requested):
                 # if the subdomain does not exist, just pass, print nothing
                 pass
             else:
-                print("[+] Discovered subdomain:", url)
+                print("[+] Discovered subdomain:", item_builder)
                 # append the discovered subdomain to our list
-                discovered_subdomains.append(url)
+                discovered_subdomains.append(item_builder)
     except FileNotFoundError:
         print('{X} Cant Find Subdomains File')
         sys.exit()
