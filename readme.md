@@ -2,7 +2,7 @@
 
 > A telegram bot with commands to simplify bug bounty tasks 
 
-![](/docs/resources/sample.gif)
+![](/docs/resources/readme.png)
 
 +  [Installation](#installation)
 +  [Use](#use)
@@ -15,8 +15,28 @@ BugBountyBot is open-source so you can run the bot on your own server. The follo
 
 ### Provision Virtual Private Server 
 
-4. Make a new non-root sudo user. see [tutorial](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)
+1. Create a Virtual Private Server. See [digitalocean](https://www.digitalocean.com/)
 
+2. Make a new non-root sudo user. see [tutorial](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart)
+
+3.  Install PiP
+
+`sudo apt install python3-pip`
+
+4. Install python3-pip Package Manager
+
+`sudo apt install python3-pip`
+
+5.  Install pyTelegramBotAPI package
+
+`pip3 install pyTelegramBotAPI`
+
+
+### App BugBountyBot
+
+1. Clone the bot to your server
+
+`git clone https://github.com/tcbutler320/BugBountyBot.git`
 
 ### Create Telegram API Key 
 
@@ -33,6 +53,31 @@ BugBountyBot is open-source so you can run the bot on your own server. The follo
 1. Start the bot  
 
 `python3 bbbot.py`  
+
+2. (A) Alternatively, schedule your bot using cron 
+
+`crontab -e`
+
+2. (B) Set your cronjob to run at [requested intervals](https://crontab.guru/every-1-minute)
+
+*Use a bash script to check if bugbountybot is already running*
+
+Crontab entry  
+
+`* * * * * /home/bugbountybot/scripts/isRunning.sh`
+
+Script  
+
+```bash
+#!/bin/sh
+if ps -ef | grep -v grep | grep bbbot.py ; then
+        exit 0
+else
+        /usr/bin/python3 /home/bugbountybot/app/bbbot.py >>  ~/cron.log 2>&1
+        exit 0
+fi
+```
+
 
 
 

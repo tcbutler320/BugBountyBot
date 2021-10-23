@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # bug bounty bot 
 
 import os
@@ -10,7 +11,10 @@ from dotenv import load_dotenv, find_dotenv
 logger = telebot.logger
 telebot.logger.setLevel(logging.DEBUG) # Outputs debug messages to console.
 
-logging.basicConfig(filename='../logs/api.log',level=logging.INFO,format='%(asctime)s:%(levelname)s:%(message)s')
+dir = os.path.dirname(__file__)
+logfile = os.path.join(dir, 'logs','api.log')
+
+logging.basicConfig(filename=logfile,level=logging.INFO,format='%(asctime)s:%(levelname)s:%(message)s')
 
 
 # Get Enviorment Variables and API Keys

@@ -26,7 +26,7 @@ def botserver(API_KEY):
                 bot.reply_to(message,"{X} Error in Request")
                 return False 
             else: 
-                bot.reply_to(message,"🔭 Searching for SubDomains, Check Back in a Bit")
+                bot.reply_to(message,"🔭 Searching for SubDomains ...")
                 return True
 
         
